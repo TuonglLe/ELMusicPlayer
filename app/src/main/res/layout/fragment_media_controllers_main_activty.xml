@@ -1,0 +1,68 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    tools:context="example.com.elmusicplayer.UI.MediaControllersFragment_MainActivity">
+
+    <RelativeLayout
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/song_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"/>
+        <LinearLayout
+            android:layout_toRightOf="@id/song_image"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/song_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            <TextView
+                android:id="@+id/song_artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/media_controlers_holder"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/skipPre"
+                style="@style/ImageButtonCircle"
+                app:srcCompat="@drawable/ic_skip_previous_white_48dp"
+                android:tint="@color/colorPrimary"/>
+
+            <ImageButton
+                android:id="@+id/play"
+                style="@style/ImageButtonCircle"
+                android:tint="@color/colorPrimary"/>
+
+            <ImageButton
+                android:id="@+id/skipNext"
+                style="@style/ImageButtonCircle"
+                app:srcCompat="@drawable/ic_skip_next_white_48dp"
+                android:tint="@color/colorPrimary"/>
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
