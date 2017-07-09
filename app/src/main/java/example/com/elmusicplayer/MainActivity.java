@@ -8,9 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,6 @@ import example.com.elmusicplayer.UI.Fragment.DeviceSongListFragment;
 import example.com.elmusicplayer.UI.Fragment.RemoteSongListFragment;
 import example.com.elmusicplayer.UI.Fragment.SongListFragment;
 import example.com.elmusicplayer.UI.MediaControllersFragment_MainActivity;
-import example.com.elmusicplayer.Utils.MessageConstants;
 
 public class MainActivity extends BaseActivity implements CurrentSongListObserver {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -43,24 +39,16 @@ public class MainActivity extends BaseActivity implements CurrentSongListObserve
 
         SongsTrackerPublisher.getInstance().registerObserver(this);
 
-//        currentSongListFragment = new SongListFragment();
         basicMedoaControllerFragment = new MediaControllersFragment_MainActivity();
 
-
         fragmentManager = getSupportFragmentManager();
-//        setupViewPager();
         fragmentManager.beginTransaction()
-//                .replace(R.id.song_list_fragment_holder, currentSongListFragment, SongListFragment.FRAGMENT_TAG)
                 .replace(R.id.media_control_fragment_holder, basicMedoaControllerFragment, MediaControllersFragment_MainActivity.TAG)
                 .commit();
 
         hideMediaOCntrollerFragment();
-
-
-
+        setupViewPager();
     }
-
-
 
     public void  hideMediaOCntrollerFragment(){
         fragmentManager.beginTransaction()
@@ -84,14 +72,25 @@ public class MainActivity extends BaseActivity implements CurrentSongListObserve
 
     @Override
     protected void doSomethingWhenServiceIsConnectd() {
-//        currentSongListFragment.setMessageType(MessageConstants.MESSAGE_TYPE_REMOTE_JSON_SONGS);
-//        currentSongListFragment.sendMessageToMusicService();
-        setupViewPager();
+        if(viewPager == null) {
+            setupViewPager();
+        }
+
+        findCurrentFragmentAndSenMessageToService();
+    }
+
+    private void findCurrentFragmentAndSenMessageToService() {
+        if( viewPager.getCurrentItem() == 0 ) {
+            remoteSongListFragment.sendMessageToMusicService();
+        }  else {
+            deviceSongListFragment.sendMessageToMusicService();
+        }
     }
 
     @Override
     public void recieveCurrentSongListStatus(List<Song> currentSongList) {
-        if(currentSongList != null){
+        if(currentSongList != null ){
+            Log.d(LOG_TAG, viewPager == null ? "viewpager == null": "viewPager != null");
             getCurrentSongListFragment().getSongListRVAdapter().setSongList(currentSongList);
         }
     }
@@ -134,11 +133,7 @@ public class MainActivity extends BaseActivity implements CurrentSongListObserve
 
             }
         });
-        if( viewPager.getCurrentItem() == 0 ) {
-            remoteSongListFragment.sendMessageToMusicService();
-        }  else {
-            deviceSongListFragment.sendMessageToMusicService();
-        }
+
     }
 
 

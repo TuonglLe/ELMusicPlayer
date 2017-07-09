@@ -20,6 +20,7 @@ import example.com.elmusicplayer.Utils.PermissionHelper;
 
 public abstract class BaseActivity extends AppCompatActivity  {
     private static final String LOG_TAG = BaseActivity.class.getSimpleName();
+    protected boolean serviceIsAlive;
     protected Toolbar toolbar;
     protected Messenger messenger;
     protected BasicMediaActionBroadcaster mediaActionBroadcaster;
@@ -27,12 +28,14 @@ public abstract class BaseActivity extends AppCompatActivity  {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(LOG_TAG, "onServiceConnected");
+            serviceIsAlive = true;
             messenger = new Messenger(service);
             doSomethingWhenServiceIsConnectd();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            serviceIsAlive = false;
         }
     };
 
