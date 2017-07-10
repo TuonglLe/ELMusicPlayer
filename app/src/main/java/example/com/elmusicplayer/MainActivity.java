@@ -116,6 +116,7 @@ public class MainActivity extends BaseActivity implements CurrentSongListObserve
                         remoteSongListFragment.sendMessageToMusicService();
                         break;
                     case 1:
+                        handlePermission();
                         deviceSongListFragment.sendMessageToMusicService();
                         break;
                     default:

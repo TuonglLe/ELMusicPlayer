@@ -45,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        handlePermission();
+        //handlePermission();
         super.onCreate(savedInstanceState);
         setContentView(fetchLayoutResource());
         setUpToolbar();
